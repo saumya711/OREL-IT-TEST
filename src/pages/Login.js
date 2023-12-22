@@ -1,53 +1,118 @@
 import React, { useState, useEffect} from 'react';
 import { toast } from 'react-toastify';
-import { GoogleOutlined, MailOutlined } from '@ant-design/icons';
 import { Button, Card } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link} from 'react-router-dom';
+import { isNotEmpty } from "../validation/Validation";
+import axios from "axios";
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
-
-  const inputStyle = {
-    border: '1px solid #ccc',
-    outline: 'none',
-    padding: '8px',
-    // Add any other styles as needed
-  };
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const validateInput = (inputId, inputValue) => {
+    if (!isNotEmpty(inputValue)) {
+      document.getElementById(inputId).classList.add("input-error");
+      return true;
+    }
+    return false;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (
+      validateInput("email", formData.email) ||
+      validateInput("password", formData.password)
+    ) {
+      toast.error("All input fields requird!!!");
+      return;
+    }
+
+    setLoading(true);
+    await axios
+      .post("https://api.escuelajs.co/api/v1/auth/login", {
+        email: formData.email,
+        password: formData.password,
+      })
+      .then((res) => {
+        if (res.status === 201) {
+          toast.success("Login Successfuly!!!");
+          setLoading(false);
+          dispatch({
+            type: "LOGGED_IN_USER",
+            payload: {
+              //email: res.data.email,
+              token: res.data.access_token,
+              _id: res.data._id,
+            },
+          });
+          setIsLoggedIn(true);
+        }
+        console.log("res", res);
+        //history.push("/home");
+        navigate("/home");
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error("Something went wrong!");
+        setLoading(false);
+      });
+  };
 
   const loginForm = () => {
     return(
-      <form >
-        <div className='form-group'>
+      <form>
+        <div id="email" className='form-group'>
           <label>Email</label>
           <input 
-          type='email' 
-          className='form-control'
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder='Your email'
-          autoFocus />
+            type='email' 
+            name="email"
+            className='form-control'
+            value={formData.email}
+            //onChange={(e) => setEmail(e.target.value)}
+            onChange={handleInputChange}
+            placeholder='Your email'
+            autoFocus 
+          />
         </div>
       
-        <div className='form-group mt-3'>
+        <div id="password" className='form-group mt-3'>
           <label>Password</label>
           <input 
-          type='password' 
-          className='form-control'
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder='Your password'
-          autoFocus />
+            type='password' 
+            name="password"
+            className='form-control'
+            value={formData.password}
+            //onChange={(e) => setPassword(e.target.value)}
+            onChange={handleInputChange}
+            placeholder='Your password'
+            autoFocus 
+          />
         </div>
 
         <Button
-          //onClick={handleSubmit}
+          onClick={handleSubmit}
           className='mb-3 mt-3'
           block
           size='large'
-          disabled={!email || password.length < 6}
           style={{ backgroundColor: 'red', borderColor: 'red', color: 'white' }}
         >
           Log in
