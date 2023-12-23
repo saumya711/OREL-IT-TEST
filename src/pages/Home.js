@@ -1,11 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import Sidenav from '../components/Sidenav';
-import { useDispatch, useSelector } from 'react-redux';
-import { toast } from 'react-toastify';
+import { useSelector } from 'react-redux';
 import { getAllProducts } from '../functions/products';
+import ProductCard from '../components/card/ProductCard';
 
 const Home = () => {
-  const [products, setProducts] = useState([]);
+  const [allproducts, setAllProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   
   const user = useSelector((state) => ({ ...state}));
@@ -16,28 +16,42 @@ const Home = () => {
 
   const loadAllProducts = async () => {
     setLoading(true);
-    try {
-      const data = await getAllProducts(10, user.token);
-      console.log(data);
-      setProducts(data);
+    getAllProducts(1, user.token)
+    .then((res) => {
+      setAllProducts(res.data.data.products);
       setLoading(false);
-    } catch (error) {
-      console.error('Error loading products:', error);
+    })
+    .catch((err) => {
       setLoading(false);
-    }
+      console.log(err);
+    })
   }
+  
   return (
     <div className='container-fluid'>
-        <div className='row'>
-          <div className='col-md-2'>
+      <div className='row'>
+        <div className='col-md-2'>
+          <div className='container'>
             <Sidenav />
           </div>
-          
-          <div className='col-md-10'>
-            <h4>Home Page</h4>
-            {JSON.stringify(products)}
+        </div>
+        
+        <div className='col-md-10'>
+          <div className='container'>
+            <h4 className='text-center p-3 mb-5 display-4 jumbotron'>
+              All Products
+            </h4>
+            
+            <div className='row'>
+              {allproducts.map((product) => (
+                <div key={product.code} className='col-md-4 pb-3'>
+                  <ProductCard product={product} />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
+      </div>
     </div>
   )
 }
