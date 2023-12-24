@@ -1,14 +1,18 @@
 import React, {useState, useEffect} from 'react';
 import { getProfile } from '../functions/user';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Avatar } from 'antd';
 import Sidenav from '../components/sidebar/Sidenav';
+import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
   const [profile, setProfile] = useState({});
   const [loading, setLoading] = useState(false);
 
   const { user } = useSelector((state) => ({ ...state}));
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     getProfile(user.token)
@@ -23,6 +27,15 @@ const Profile = () => {
     })
   },[]);
 
+  const handleLogout = () => {
+    dispatch({
+      type: "LOGOUT",
+      payload: null, 
+    });
+
+    navigate("/");
+  };
+
   return (
     <div className='container-fluid'>
       <div className='row'>
@@ -33,7 +46,8 @@ const Profile = () => {
         </div>
         <div className='col-md-10'>
           <div className='container'>
-            <button 
+            <button
+              onClick={handleLogout} 
               className='text-center btn btn-primary btn-raised btn-blocked'
               style={{ position: 'absolute', top: '10px', right: '10%' }}
             >
