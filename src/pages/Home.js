@@ -1,12 +1,16 @@
 import React, {useState, useEffect} from 'react';
-import Sidenav from '../components/Sidenav';
+import Sidenav from '../components/sidebar/Sidenav';
 import { useSelector } from 'react-redux';
-import { getAllProducts } from '../functions/products';
+import { getAllProducts } from '../functions/product';
 import ProductCard from '../components/card/ProductCard';
+import { Pagination } from 'antd';
+import LoadingCard from '../components/card/LoadingCard';
 
 const Home = () => {
   const [allproducts, setAllProducts] = useState([]);
+  const [productCount, setAllProductCount] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [ page, setPage ] = useState(1);
   
   const user = useSelector((state) => ({ ...state}));
 
@@ -16,8 +20,9 @@ const Home = () => {
 
   const loadAllProducts = async () => {
     setLoading(true);
-    getAllProducts(1, user.token)
+    getAllProducts(20, user.token)
     .then((res) => {
+      console.log("All Products",res.data.data.products);
       setAllProducts(res.data.data.products);
       setLoading(false);
     })
@@ -42,12 +47,30 @@ const Home = () => {
               All Products
             </h4>
             
-            <div className='row'>
-              {allproducts.map((product) => (
-                <div key={product.code} className='col-md-4 pb-3'>
-                  <ProductCard product={product} />
+            <div className='container'>
+              {loading ? (
+              <LoadingCard count={3}/>
+              ) : (
+              <div className='row'>
+                {allproducts.map((product) => (
+                <div key={product._id} className='col-md-4 pb-3'>
+                    < ProductCard
+                    product={product}
+                    />
                 </div>
-              ))}
+                ))}
+              </div>
+              )}
+            </div>
+
+            <div className='row'>
+              <nav className='col-md-4 offset-md-4 text-center pt-2 p-3'>
+                <Pagination
+                  current={page}
+                  total={(productCount / 3) * 10}
+                  onChange={(value) => setPage(value)}
+                />
+              </nav>
             </div>
           </div>
         </div>

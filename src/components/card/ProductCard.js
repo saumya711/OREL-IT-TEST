@@ -15,7 +15,7 @@ const ProductCard = ({product}) => {
   const dispatch = useDispatch();
 
   // destructure
-  const { name, shortDescription, images, price } = product;
+  const { name, shortDescription, images, price, code } = product;
   
   return (
     <>
@@ -29,7 +29,7 @@ const ProductCard = ({product}) => {
         }
 
         actions={[ 
-          <Link>
+          <Link to={`/product/${code}`}>
               <EyeOutlined className='text-primary' /> <br /> View Product
           </Link>, 
           <Tooltip title={tooltip}>

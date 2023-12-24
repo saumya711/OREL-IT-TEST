@@ -6,6 +6,8 @@ import "react-toastify/dist/ReactToastify.css";
 import Login from "./pages/Login";
 import Header from "./components/Header";
 import Home from "./pages/Home";
+import SingleProduct from "./pages/SingleProduct";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
@@ -14,7 +16,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/home" element={<Home />} />
-        {/* Define more routes here */}
+        <Route path="/product/:code" element={<SingleProduct />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
       <ToastContainer />
     </BrowserRouter>

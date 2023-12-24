@@ -6,6 +6,7 @@ import { isNotEmpty } from "../validation/Validation";
 import axios from "axios";
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { GoogleOutlined } from '@ant-design/icons';
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -113,9 +114,21 @@ const Login = () => {
           className='mb-3 mt-3'
           block
           size='large'
+          shape='round'
           style={{ backgroundColor: 'red', borderColor: 'red', color: 'white' }}
         >
           Log in
+        </Button>
+
+        <Button
+          type='primary'
+          className='mb-3'
+          block
+          shape='round'
+          icon={<GoogleOutlined />}
+          size='large'
+        >
+          Login with Google
         </Button>
       </form>
     )
