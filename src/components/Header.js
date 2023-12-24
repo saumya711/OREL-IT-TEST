@@ -23,7 +23,9 @@ const Header = () => {
     <div className='container-fluid'>
       <div className='row p-3'>
         <div className='col-md-3'>
-          <img className='p-1' src={Logo} style={imageStyle}/>
+          <Link to={'/home'}>
+            <img className='p-1' src={Logo} style={imageStyle}/>
+          </Link>
         </div>
         <div className='col-md-6'>
           <Input
@@ -45,6 +47,9 @@ const Header = () => {
         </div>
         <div className='col-md-6'>
           <Menu mode="horizontal">
+            <Item>
+              <Link to={'/home'}>Home</Link>
+            </Item>
             <Item>Flash Deals</Item>
             <Item>Special Offers</Item>
             <Item>Brands</Item>
