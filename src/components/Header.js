@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Input, Menu } from 'antd';
+import { Input, Menu, Tooltip } from 'antd';
 import { UserOutlined, SearchOutlined, RightOutlined, AppstoreFilled,  } from '@ant-design/icons';
 import Logo from '../assests/logo.png';
 import OrangeLogo from '../assests/orange.png'
@@ -9,6 +9,7 @@ const { Item } = Menu;
 
 const Header = () => {
   const [ current, setCurrent] = useState('home');
+  const [tooltip, setTooltip] = useState('User Profile');
 
   const imageStyle = {
     width: '50%',
@@ -34,9 +35,12 @@ const Header = () => {
           />
         </div>
         <div className='col-md-3 float-right'>
-          <Link to={`/prfile`}>
-            <UserOutlined />
-          </Link>
+          <Tooltip title={tooltip}>
+            <Link to={`/profile`}>
+              <UserOutlined />
+            </Link>
+          </Tooltip>
+          
         </div>
       </div>
       <div className='row p-3'>
