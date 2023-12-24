@@ -1,8 +1,8 @@
 import axios from "axios";
 
-export const getAllProducts = async (pageNumber, userToken) => {
+export const getProfile = async (userToken) => {
     try {
-      return await axios.get(`${process.env.REACT_APP_API}/recommend/items?page=${pageNumber}`, {
+      return await axios.get(`https://api.escuelajs.co/api/v1/auth/profile`, {
         headers: {
           Authorization: `Bearer ${userToken}`
         }
@@ -11,4 +11,4 @@ export const getAllProducts = async (pageNumber, userToken) => {
       console.error(error);
       throw error;
     }
-};
+  };

@@ -3,6 +3,7 @@ import { Input, Menu } from 'antd';
 import { UserOutlined, SearchOutlined, RightOutlined, AppstoreFilled,  } from '@ant-design/icons';
 import Logo from '../assests/logo.png';
 import OrangeLogo from '../assests/orange.png'
+import { Link } from 'react-router-dom';
 
 const { Item } = Menu;
 
@@ -31,7 +32,9 @@ const Header = () => {
           />
         </div>
         <div className='col-md-3 float-right'>
-          <UserOutlined />
+          <Link to={`/prfile`}>
+            <UserOutlined />
+          </Link>
         </div>
       </div>
       <div className='row p-3'>
