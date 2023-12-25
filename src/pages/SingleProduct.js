@@ -6,6 +6,7 @@ import { HeartOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import { Card, Carousel } from 'antd';
 import ProductListItems from '../components/card/ProductListItems';
 import ProductImage from '../assests/product.webp'
+import Header from '../components/Header';
 
 const SingleProduct = ({ match }) => {
   const [singleProduct, setSingleProduct] = useState({});
@@ -33,6 +34,7 @@ const SingleProduct = ({ match }) => {
   }
   return (
     <div className='container-fluid'>
+      <Header />
       <div className='row pt-4'>
         <div className='col-md-7'>
           {singleProduct.images && singleProduct.images.length ? (

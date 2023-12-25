@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import Header from '../components/Header'
 import Sidenav from '../components/sidebar/Sidenav';
 import { useSelector } from 'react-redux';
 import { getAllProducts } from '../functions/product';
@@ -8,7 +9,6 @@ import LoadingCard from '../components/card/LoadingCard';
 
 const Home = () => {
   const [allproducts, setAllProducts] = useState([]);
-  const [productCount, setAllProductCount] = useState([]);
   const [loading, setLoading] = useState(false);
   const [ page, setPage ] = useState(1);
   
@@ -34,6 +34,7 @@ const Home = () => {
   
   return (
     <div className='container-fluid'>
+      <Header />
       <div className='row'>
         <div className='col-md-2'>
           <div className='container'>
@@ -63,15 +64,6 @@ const Home = () => {
               )}
             </div>
 
-            <div className='row'>
-              <nav className='col-md-4 offset-md-4 text-center pt-2 p-3'>
-                <Pagination
-                  current={page}
-                  total={(productCount / 3) * 10}
-                  onChange={(value) => setPage(value)}
-                />
-              </nav>
-            </div>
           </div>
         </div>
       </div>

@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Avatar } from 'antd';
 import Sidenav from '../components/sidebar/Sidenav';
 import { useNavigate } from 'react-router-dom';
+import Header from '../components/Header';
 
 const Profile = () => {
   const [profile, setProfile] = useState({});
@@ -40,6 +41,7 @@ const Profile = () => {
 
   return (
     <div className='container-fluid'>
+      <Header />
       <div className='row'>
         <div className='col-md-2'>
           <div className='container'>
