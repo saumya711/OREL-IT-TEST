@@ -67,6 +67,7 @@ const Login = () => {
               _id: res.data._id,
             },
           });
+          localStorage.setItem("user", res.data.access_token);
           setIsLoggedIn(true);
         }
         console.log("res", res);
@@ -92,6 +93,8 @@ const Login = () => {
           }
         );
         console.log(res);
+    
+        localStorage.setItem("user", response.access_token);
         setEmail("john@mail.com");
         setPassword("changeme");
       } catch (error) {

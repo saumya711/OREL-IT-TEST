@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import { HeartOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import { Card, Carousel } from 'antd';
 import ProductListItems from '../components/card/ProductListItems';
+import ProductImage from '../assests/product.webp'
 
 const SingleProduct = ({ match }) => {
   const [singleProduct, setSingleProduct] = useState({});
@@ -36,7 +37,8 @@ const SingleProduct = ({ match }) => {
         <div className='col-md-7'>
           {singleProduct.images && singleProduct.images.length ? (
             <Carousel showArrows={true} autoPlay infiniteLoop>
-              {singleProduct.images && singleProduct.images.map((image) => <img src={image.url} key={image.public_id}/>)}
+              {/* {singleProduct.images && singleProduct.images.map((image) => <img src={image.url} key={image.public_id}/>)} */}
+              <img src={ProductImage}/>
             </Carousel>
           ) : (
             <Card cover={<img src="" className="mb-3 card-image" />}></Card>

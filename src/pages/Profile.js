@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 const Profile = () => {
   const [profile, setProfile] = useState({});
   const [loading, setLoading] = useState(false);
+  const [avatarUrl, setAvatarUrl] = useState('https://i.pravatar.cc/300');
 
   const { user } = useSelector((state) => ({ ...state}));
 
@@ -19,6 +20,7 @@ const Profile = () => {
     .then((res) => {
       console.log("User Profile",res.data);
       setProfile(res.data);
+      setAvatarUrl(res.data.avatar);
       setLoading(false);
     })
     .catch((err) => {
@@ -55,7 +57,8 @@ const Profile = () => {
             </button>
             <div className='row justify-content-center align-items-center mb-4'>
               <Avatar 
-                src={profile.avatar} 
+                src={avatarUrl}
+                loading={loading ? 'lazy' : 'eager'} 
                 size={250} 
               />
             </div>
