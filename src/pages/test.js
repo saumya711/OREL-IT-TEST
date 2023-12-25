@@ -67,7 +67,6 @@ const Login = () => {
               _id: res.data._id,
             },
           });
-          localStorage.setItem("user", res.data.access_token);
           setIsLoggedIn(true);
         }
         console.log("res", res);
@@ -88,13 +87,11 @@ const Login = () => {
           "https://www.googleapis.com/oauth2/v3/userinfo",
           {
             headers: {
-              Authorization: `Bearer ${response.access_token}`,
+              Authorization: Bearer ${response.access_token},
             },
           }
         );
         console.log(res);
-    
-        localStorage.setItem("user", response.access_token);
         setEmail("john@mail.com");
         setPassword("changeme");
       } catch (error) {

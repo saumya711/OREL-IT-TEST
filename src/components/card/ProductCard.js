@@ -4,6 +4,7 @@ import { EyeOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import _ from 'lodash';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import ProductImage from '../../assests/product.webp'
 
 const { Meta } = Card;
 
@@ -22,7 +23,8 @@ const ProductCard = ({product}) => {
       <Card
         cover={
           <img 
-            src={images && images.length ? images[0].url : ""}
+            //src={images && images.length ? images[0].url : ""}
+            src={ProductImage}
             style={{ height: '200px', objectFit: "cover"}}
             className='p-1'
           />
