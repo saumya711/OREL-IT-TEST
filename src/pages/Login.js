@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { GoogleOutlined } from "@ant-design/icons";
 
 import { useGoogleLogin } from "@react-oauth/google";
+import { setToken } from '../actions/authActions'; 
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -60,18 +61,17 @@ const Login = () => {
           toast.success("Login Successfuly!!!");
           setLoading(false);
           dispatch({
-            type: "LOGGED_IN_USER",
+            type: "ADD_USER_INFO",
             payload: {
-              //email: res.data.email,
-              token: res.data.access_token,
-              _id: res.data._id,
+              email: 'john@mail.com',
+              name: 'Jhon'
             },
           });
-          localStorage.setItem("user", res.data.access_token);
+          dispatch(setToken(res.data.access_token));
+          localStorage.setItem("token", res.data.access_token);
           setIsLoggedIn(true);
         }
         console.log("res", res);
-        //history.push("/home");
         navigate("/home");
       })
       .catch((error) => {
@@ -93,8 +93,16 @@ const Login = () => {
           }
         );
         console.log(res);
+        dispatch({
+          type: "ADD_USER_INFO",
+          payload: {
+            email: res.data.email,
+            name: res.data.name
+          },
+        });
     
-        localStorage.setItem("user", response.access_token);
+        dispatch(setToken(response.access_token));
+        localStorage.setItem("token", res.data.access_token);
         setEmail("john@mail.com");
         setPassword("changeme");
       } catch (error) {
@@ -118,7 +126,7 @@ const Login = () => {
           toast.success("Login Successfuly!!!");
           setLoading(false);
           dispatch({
-            type: "LOGGED_IN_USER",
+            type: "SET_TOKEN",
             payload: {
               token: res.data.access_token,
               _id: res.data._id,
@@ -128,7 +136,6 @@ const Login = () => {
         }
 
         console.log("res", res);
-        //history.push("/home");
         navigate("/home");
       } catch (error) {
         console.log(error);
@@ -152,7 +159,6 @@ const Login = () => {
             name="email"
             className="form-control"
             value={formData.email}
-            //onChange={(e) => setEmail(e.target.value)}
             onChange={handleInputChange}
             placeholder="Your email"
             autoFocus
@@ -165,7 +171,6 @@ const Login = () => {
             name="password"
             className="form-control"
             value={formData.password}
-            //onChange={(e) => setPassword(e.target.value)}
             onChange={handleInputChange}
             placeholder="Your password"
             autoFocus
@@ -192,7 +197,6 @@ const Login = () => {
         >
           Login with Google
         </Button>
-        {/* <GoogleAuth /> */}
       </form>
     );
   };

@@ -1,10 +1,9 @@
 import React from 'react';
 import { Menu } from 'antd';
-import { DollarOutlined, EditOutlined, HeartOutlined, PlusOutlined, ShoppingOutlined, StarOutlined, UserAddOutlined, UserOutlined, WalletOutlined } from '@ant-design/icons';
 import { DashboardData, AccountSettingsData } from './SidebarData';
 import { Link } from 'react-router-dom';
 
-const { SubMenu, Item } = Menu;
+const { Item } = Menu;
 
 const Sidenav = () => {
   return (

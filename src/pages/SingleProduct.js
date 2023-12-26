@@ -12,7 +12,7 @@ const SingleProduct = ({ match }) => {
   const [singleProduct, setSingleProduct] = useState({});
   const [loading, setLoading] = useState(false);
 
-  const { user } = useSelector((state) => ({ ...state }));
+  const { auth } = useSelector((state) => ({ ...state }));
   const { code } = useParams();
 
   useEffect(() => {
@@ -21,7 +21,7 @@ const SingleProduct = ({ match }) => {
 
   const loadSingleProduct = () => {
     setLoading(true);
-    getSingleProduct(code, user.token)
+    getSingleProduct(code, auth.token)
     .then((res) => {
       console.log("Single Product",res.data.data.product);
       setSingleProduct(res.data.data.product);

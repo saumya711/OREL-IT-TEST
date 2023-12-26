@@ -6,20 +6,21 @@ import Sidenav from '../components/sidebar/Sidenav';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 
+import { removeToken } from '../actions/authActions';
+
 const Profile = () => {
   const [profile, setProfile] = useState({});
   const [loading, setLoading] = useState(false);
   const [avatarUrl, setAvatarUrl] = useState('https://i.pravatar.cc/300');
 
-  const { user } = useSelector((state) => ({ ...state}));
+  const { auth, user } = useSelector((state) => ({ ...state}));
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
-    getProfile(user.token)
+    getProfile(auth.token)
     .then((res) => {
-      console.log("User Profile",res.data);
       setProfile(res.data);
       setAvatarUrl(res.data.avatar);
       setLoading(false);
@@ -31,9 +32,14 @@ const Profile = () => {
   },[]);
 
   const handleLogout = () => {
+    dispatch(removeToken());
+    localStorage.removeItem('token');
     dispatch({
-      type: "LOGOUT",
-      payload: null, 
+      type: "ADD_USER_INFO",
+      payload: {
+        email: null,
+        name: null
+      },
     });
 
     navigate("/");
@@ -66,14 +72,12 @@ const Profile = () => {
             </div>
             <div className='row justify-content-center'>
               <div className='col-md-6'>
-                <h2 className='text-center'>{profile.name}</h2>
-                <p className='text-center'>{profile.email}</p>
-                <p className='text-center'>{profile.role}</p>
+                <h2 className='text-center'>{user.name}</h2>
+                <p className='text-center'>{user.email}</p>
               </div>
             </div>
           </div>
         </div>
-      
       </div>
     </div>
   )

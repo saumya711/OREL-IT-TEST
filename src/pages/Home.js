@@ -10,9 +10,8 @@ import LoadingCard from '../components/card/LoadingCard';
 const Home = () => {
   const [allproducts, setAllProducts] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [ page, setPage ] = useState(1);
   
-  const user = useSelector((state) => ({ ...state}));
+  const { auth } = useSelector((state) => ({ ...state}));
 
   useEffect(() => {
     loadAllProducts();
@@ -20,9 +19,8 @@ const Home = () => {
 
   const loadAllProducts = async () => {
     setLoading(true);
-    getAllProducts(20, user.token)
+    getAllProducts(100, auth.token)
     .then((res) => {
-      console.log("All Products",res.data.data.products);
       setAllProducts(res.data.data.products);
       setLoading(false);
     })
@@ -50,11 +48,11 @@ const Home = () => {
             
             <div className='container'>
               {loading ? (
-              <LoadingCard count={3}/>
+              <LoadingCard count={6}/>
               ) : (
               <div className='row'>
                 {allproducts.map((product) => (
-                <div key={product._id} className='col-md-4 pb-3'>
+                <div key={product.code} className='col-md-4 pb-3'>
                     < ProductCard
                     product={product}
                     />
@@ -63,7 +61,6 @@ const Home = () => {
               </div>
               )}
             </div>
-
           </div>
         </div>
       </div>

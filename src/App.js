@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -9,8 +9,19 @@ import Home from "./pages/Home";
 import SingleProduct from "./pages/SingleProduct";
 import Profile from "./pages/Profile";
 
+import { useDispatch } from 'react-redux';
+import { setToken } from './actions/authActions';
+
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const tokenFromLocalStorage = localStorage.getItem('token');
+    if (tokenFromLocalStorage) {
+      dispatch(setToken(tokenFromLocalStorage));
+    }
+  }, [dispatch]);
+
   return (
     <BrowserRouter>
       <Navbar />
