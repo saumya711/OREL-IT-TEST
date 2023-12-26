@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { Input, Menu, Tooltip } from 'antd';
-import { UserOutlined, SearchOutlined, RightOutlined, AppstoreFilled,  } from '@ant-design/icons';
+import { UserOutlined, SearchOutlined, AppstoreFilled,  } from '@ant-design/icons';
 import Logo from '../assests/logo.png';
 import OrangeLogo from '../assests/orange.png'
 import { Link } from 'react-router-dom';
@@ -40,13 +40,12 @@ const Header = () => {
               <UserOutlined />
             </Link>
           </Tooltip>
-          
         </div>
       </div>
       <div className='row p-3'>
         <div className='col-md-3'>
           <button className='btn' style={{ backgroundColor: 'red', color: 'white'}}>
-            <AppstoreFilled /> All Categories <RightOutlined className='float-right'/>
+            <AppstoreFilled /> All Categories
           </button>
         </div>
         <div className='col-md-6'>

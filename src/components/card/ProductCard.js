@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Card, Tooltip } from 'antd';
 import { EyeOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import _ from 'lodash';
-import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import ProductImage from '../../assests/product.webp'
 
@@ -11,12 +10,7 @@ const { Meta } = Card;
 const ProductCard = ({product}) => {
   const [tooltip, setTooltip] = useState('Click to add');
 
-  // redux
-  const { user, cart } = useSelector((state) => ({ ...state }));
-  const dispatch = useDispatch();
-
-  // destructure
-  const { name, shortDescription, images, price, code } = product;
+  const { name, shortDescription, price, price_currency, code } = product;
   
   return (
     <>
@@ -44,7 +38,7 @@ const ProductCard = ({product}) => {
         ]}
       >
         <Meta 
-          title={`${name} - $${price}`} 
+          title={`${name} - ${price} ${price_currency}`} 
           Description={`${shortDescription && shortDescription.substring(0, 40)}...`} 
         />
       </Card>
